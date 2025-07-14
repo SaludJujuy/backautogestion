@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Xeilon;
+namespace App\Http\Controllers\Prueba;
 
 use App\Http\Controllers\Controller;
-use App\Models\Xeilon\Prestador;
 use Illuminate\Http\Request;
+use App\Models\Prueba\Prestador;
 
-class Controlador_Prestador extends Controller
+class Controlador_Prestador_Prueba extends Controller
 {
-    public function buscar_prestador(Request $request)
+    public function buscar_prestador_prueba(Request $request)
     {
         $param = $request->input('matricula');
         $prestador = new Prestador();
-        $result = $prestador->buscar_prestador($param);
+        $result = $prestador->buscar_prestador_prueba($param);
 
         if ($result) {
             return response()->json($result, 200);

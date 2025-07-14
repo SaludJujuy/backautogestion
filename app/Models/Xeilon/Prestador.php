@@ -10,7 +10,7 @@ class Prestador extends Model
 {
     protected $connection = 'xeilon';
 
-    public function buscar_afiliado($param){
+    public function buscar_prestador($param){
         return $resutl = DB::connection($this->connection)
             ->table('prestadores as prest')
             ->join('medicomatricula as mm','mm.IdPrestador', '=', 'prest.IdPrestador')

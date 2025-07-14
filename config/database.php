@@ -111,7 +111,7 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
-
+/*
         'xeilon' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -131,7 +131,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
+*/
     ],
 
     /*
