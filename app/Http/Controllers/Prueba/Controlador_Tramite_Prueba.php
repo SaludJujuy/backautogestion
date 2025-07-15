@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Prueba;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Prueba\Tramite;
+
 class Controlador_Tramite_Prueba extends Controller
 {
     public function registrar_tramite(Request $request){
