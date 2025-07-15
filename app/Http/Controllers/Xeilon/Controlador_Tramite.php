@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Prueba;
+namespace App\Http\Controllers\Xeilon;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Xeilon\Tramite;
 
-class Controlador_Tramite_Prueba extends Controller
+class Controlador_Tramite extends Controller
 {
     public function registrar_tramite(Request $request){
         $id = $request->input('prestador');

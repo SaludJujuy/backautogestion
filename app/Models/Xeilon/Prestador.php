@@ -14,8 +14,16 @@ class Prestador extends Model
         return $resutl = DB::connection($this->connection)
             ->table('prestadores as prest')
             ->join('medicomatricula as mm','mm.IdPrestador', '=', 'prest.IdPrestador')
-            ->select('prest.*')
-            ->where('mm.Matricula', $param)
-            ->first();
+            ->join('profesiones as prof','prof.IdProfesion','=','mm.IdProfesion')
+            //->join('especialidadesprestador as ep','ep.IdPrestador','=','prest.IdPrestador')
+            //->join('especialidadesvarias as espv','espv.IdEspecialidadVaria','=','ep.IdEspecialidadVaria')
+            ->select(
+                'prest.*',
+                'mm.Matricula',
+                'prof.Profesion',
+                //'espv.*',
+            )
+            ->where('mm.Matricula','LIKE','%'. $param. '%')
+            ->get();
     }
 }
