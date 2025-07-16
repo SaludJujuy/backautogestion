@@ -4,6 +4,7 @@ namespace App\Models\Xeilon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class Tramite extends Model
 {
@@ -11,20 +12,15 @@ class Tramite extends Model
 
     static function insertar_tramite($id, $sobre, $consulta, $practica) {
 
-        dd('Inserting tramite with parameters:', [
-            'IdPrestador' => $id,
-            'numero_sobre' => $sobre,
-            'cantidad_consulta' => $consulta,
-            'cantidad_practica' => $practica
-        ]);
+       dd("ingreso a insertar_tramite");
         
         return DB::connection('xeilon')
             ->table('tramite_autogestion as ta')
             ->insert([
                 'ta.IDPrestador' => $id,
                 'ta.NroSobre' => $sobre,
-                'ta.cantidadConsulta' => $consulta,
-                'ta.cantidadPractica' => $practica
+                'ta.cantidadConsultas' => $consulta,
+                'ta.cantidadPracticas' => $practica
             ]);
     }
 }

@@ -112,6 +112,7 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+
         'xeilon' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -192,3 +193,4 @@ return [
     ],
 
 ];
+ 

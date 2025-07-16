@@ -19,3 +19,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/prestador/prueba/buscar', [Controlador_Prestador_Prueba::class, 'buscar_prestador_prueba']);
     Route::post('/tramite/prueba/agregar', [Controlador_Tramite_Prueba::class, 'registrar_tramite']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
