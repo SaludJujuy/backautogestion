@@ -11,4 +11,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/prestador/buscar', [Controlador_Prestador::class, 'buscar_prestador']);
 Route::post('/tramite/agregar', [Controlador_Tramite::class, 'registrar_tramite']);
-Route::post('/tramite/imprimir', [Controlador_Tramite::class, 'imprimir']);
+Route::post('/tramite/imprimir', [Controlador_Tramite::class, 'imprimir_tramite']);

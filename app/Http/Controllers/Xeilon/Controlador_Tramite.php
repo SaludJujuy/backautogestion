@@ -25,47 +25,46 @@ class Controlador_Tramite extends Controller
     }
 
     public function imprimir_tramite(Request $request){
-        $tramiteId = $request->input('tramite_id',1);
-        $copias = $request->input('copias', 2);
-        
-        $id = $request->input('prestador',11043);
-        $sobre = $request->input('sobre',0);
-        $consulta = $request->input('consulta',0);
-        $practica = $request->input('practica',0);
-        $prestador = new Prestador();
-        $prestador = $prestador->buscar_prestador_por_id($id);
-         
+        $tramiteId = $request->input('tramite_id', 1);
+        $id = $request->input('prestador');
+        $sobre = $request->input('sobre');
+        $consulta = $request->input('consulta');
+        $practica = $request->input('practica');
+
+        $prestador = (new Prestador())->buscar_prestador_por_id($id);
         $fecha = Carbon::now()->format('Y-m-d H:i');
 
         $tramite = [
             'id' => $tramiteId,
-            'prestador' => $prestador->Nombre,  
+            'prestador' => $prestador->Nombre,
             'matricula' => $prestador->Matricula,
-            'sobre' => $sobre,
-            'consulta' => $consulta,
-            'practica' => $practica,
+            'nro_sobre' => $sobre,
+            'consultas' => $consulta,
+            'practicas' => $practica,
             'fecha' => $fecha,
-        ];   
+        ];
 
-        self::imprimir_comprobante($tramite, $copias);
-        //simulacion de los datos del tramite 
+        // Formatear comprobante en texto plano
+        $contenido = $this->formatearComprobante($tramite);
 
-        return response()->json($resultado);
+        return response($contenido, 200)
+                ->header('Content-Type', 'text/plain');
     }
 
 
 
     public function imprimir(Request $request)
     {
-        $tramiteId = $request->input('tramite_id');
+        $tramiteId = $request->input('tramite_id', 1);
         $copias = $request->input('copias', 2);
-        $id = $request->input('prestador',11043);
-        $sobre = $request->input('sobre',0);
-        $consulta = $request->input('consulta',0);
-        $practica = $request->input('practica',0);
-        $prestador = new Prestador();
-        $prestador = $prestador->buscar_prestador_por_id($id);
+        $id = $request->input('prestador', 11043);
+        $sobre = $request->input('sobre', 0);
+        $consulta = $request->input('consulta', 0);
+        $practica = $request->input('practica', 0);
+
+        $prestador = (new Prestador())->buscar_prestador_por_id($id);
         $fecha = Carbon::now()->format('Y-m-d H:i');
+
         $tramite = [
             'id' => $tramiteId,
             'prestador' => $prestador->Nombre,  
@@ -75,28 +74,28 @@ class Controlador_Tramite extends Controller
             'practicas' => $practica,
             'fecha' => $fecha,
         ];
-        
 
         $contenido = $this->formatearComprobante($tramite);
-
         $nombreBase = 'tramite_' . $tramiteId . '_' . time();
-        //$rutaDestino = storage_path('app/impresiones');
-        //$rutaDestino = '\\\\10.0.0.176\\comprobantes_para_imprimir';
-
-
-
         $rutaDestino = 'C:\\Users\\PC\\Documents\\comprobantes_autogestion';
-        //$nombreArchivo = "tramite_{$tramiteId}_copia$i.txt";
-        //File::put("$rutaDestino\\$nombreArchivo", $contenido);
 
+        // Crear carpeta si no existe
         if (!File::exists($rutaDestino)) {
             File::makeDirectory($rutaDestino, 0755, true);
         }
 
-        // Generar el archivo 2 veces (dos copias)
         for ($i = 1; $i <= $copias; $i++) {
             $nombreArchivo = "$nombreBase-copia$i.txt";
-            File::put("$rutaDestino/$nombreArchivo", $contenido);
+            $rutaCompleta = "$rutaDestino\\$nombreArchivo";
+            clearstatcache(); // Limpia caché de estado de archivos
+            sleep(1); // Dale 1 segundo de gracia
+            File::put($rutaCompleta, $contenido);
+            if ($i === 1) {
+                $batPath = "C:\\scripts\\imprimir_comprobante.bat";
+                $comando = "\"$batPath\" \"$rutaCompleta\"";
+                shell_exec($comando);
+            }
+            file_put_contents(storage_path('logs/comprobante_contenido.txt'), $contenido);
         }
 
         return response()->json(['success' => true, 'mensaje' => 'Impresión generada']);
@@ -105,17 +104,18 @@ class Controlador_Tramite extends Controller
     private function formatearComprobante($tramite)
     {
         return <<<EOT
-        -------------------------------
-        TRÁMITE DE AUTOGESTIÓN
-        -------------------------------
-        Prestador: {$tramite['prestador']}
-        Fecha: {$tramite['fecha']}
-        Nro Sobre: {$tramite['nro_sobre']}
-        Consultas: {$tramite['consultas']}
-        Prácticas: {$tramite['practicas']}
+            -------------------------------
+            TRÁMITE DE AUTOGESTIÓN
+            -------------------------------
+            Prestador: {$tramite['prestador']}
+            Matrícula: {$tramite['matricula']}
+            Fecha: {$tramite['fecha']}
+            Nro Sobre: {$tramite['nro_sobre']}
+            Consultas: {$tramite['consultas']}
+            Prácticas: {$tramite['practicas']}
 
-        Gracias por su gestión.
-        -------------------------------
-        EOT;
+            Gracias por su gestión.
+            -------------------------------
+            EOT;
     }
 }
