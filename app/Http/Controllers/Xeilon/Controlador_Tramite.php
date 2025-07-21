@@ -103,19 +103,28 @@ class Controlador_Tramite extends Controller
 
     private function formatearComprobante($tramite)
     {
-        return <<<EOT
-            -------------------------------
-            TRÁMITE DE AUTOGESTIÓN
-            -------------------------------
-            Prestador: {$tramite['prestador']}
-            Matrícula: {$tramite['matricula']}
-            Fecha: {$tramite['fecha']}
-            Nro Sobre: {$tramite['nro_sobre']}
-            Consultas: {$tramite['consultas']}
-            Prácticas: {$tramite['practicas']}
+        return 
+        <<<EOT
+        
+        TRÁMITE DE AUTOGESTIÓN
+        -------------------------------
+        Cuenta: {$tramite['matricula']}
+        Prestador: {$tramite['prestador']}
+        Fecha: {$tramite['fecha']}
+        Nro Sobre: {$tramite['nro_sobre']}
+        Nro Consultas: {$tramite['consultas']}
+        Nro Prácticas: {$tramite['practicas']}
 
-            Gracias por su gestión.
-            -------------------------------
-            EOT;
+        -------------------------------
+        La presente documentacion se encuentra sujeta a verificacion 
+        de auditoria medica y contable, y no implica reconomcimiento 
+        de credito alguno ni convaliacion de los montos a favor del 
+        representante
+        -------------------------------
+        Documentacion entregada fuera de termino, Sr. Prestador sus 
+        ordenes ingresaran al circuito de facturacion el procimo mes
+        -------------------------------
+        COMPROBANTE PARA ADJUNTAR A LA DOCUMENTACION
+        EOT;
     }
 }
