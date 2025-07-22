@@ -107,7 +107,7 @@ class Controlador_Tramite extends Controller
         <<<EOT
         
         TRÁMITE DE AUTOGESTIÓN
-        -------------------------------
+        ------------------------
         Cuenta: {$tramite['matricula']}
         Prestador: {$tramite['prestador']}
         Fecha: {$tramite['fecha']}
@@ -115,15 +115,15 @@ class Controlador_Tramite extends Controller
         Nro Consultas: {$tramite['consultas']}
         Nro Prácticas: {$tramite['practicas']}
 
-        -------------------------------
+        ------------------------
         La presente documentacion se encuentra sujeta a verificacion 
         de auditoria medica y contable, y no implica reconomcimiento 
         de credito alguno ni convaliacion de los montos a favor del 
         representante
-        -------------------------------
+        ------------------------
         Documentacion entregada fuera de termino, Sr. Prestador sus 
         ordenes ingresaran al circuito de facturacion el procimo mes
-        -------------------------------
+        ------------------------
         COMPROBANTE PARA ADJUNTAR A LA DOCUMENTACION
         EOT;
     }
